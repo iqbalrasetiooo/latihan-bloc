@@ -1,71 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:latihan_bloc/bloc/counter.dart';
+import 'package:latihan_bloc/pages/center_widget.dart';
 
 class HomePage extends StatelessWidget {
-  Counter myCounter = Counter();
   HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Counter myCounter = BlocProvider.of<Counter>(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BloC Builder'),
+        title: const Text('Bloc Provider'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BlocListener<Counter, int>(
-            bloc: myCounter,
-            listener: (context, state) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  duration: Duration(seconds: 1),
-                  content: Text('Datanya adalah Genap'),
-                ),
-              );
-            },
-            listenWhen: (previous, current) {
-              if (current % 2 == 0) {
-                return true;
-              } else {
-                return false;
-              }
-            },
-            child: BlocBuilder<Counter, int>(
-              bloc: myCounter,
-              builder: (context, state) {
-                return Text(
-                  '$state',
-                  style: const TextStyle(fontSize: 50),
-                );
-              },
-            ),
-          ),
-          // StreamBuilder(
-          //   stream: myCounter.stream,
-          //   initialData: myCounter.init,
-          //   builder: (context, snapshot) {
-          //     return Text(
-          //       '${snapshot.data}',
-          //       style: const TextStyle(fontSize: 50),
-          //     );
-          //   },
-          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              IconButton(
-                onPressed: () {
-                  myCounter.decrement();
-                },
-                icon: const Icon(Icons.remove),
+              Material(
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(15),
+                child: InkWell(
+                  onTap: () {},
+                  child: SizedBox(
+                    height: 100,
+                    width: 50,
+                    // color: Colors.blue,
+                    child: IconButton(
+                      color: Colors.white,
+                      onPressed: () {
+                        myCounter.decrement();
+                      },
+                      icon: const Icon(Icons.remove),
+                    ),
+                  ),
+                ),
               ),
-              IconButton(
-                onPressed: () {
-                  myCounter.increment();
-                },
-                icon: const Icon(Icons.add),
+              Container(
+                height: 100,
+                width: 200,
+                color: Colors.red,
+                child: CenterWidget(),
+              ),
+              Material(
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(15),
+                child: InkWell(
+                  onTap: () {},
+                  borderRadius: BorderRadius.circular(15),
+                  child: SizedBox(
+                    height: 100,
+                    width: 50,
+                    // color: Colors.blue,
+                    child: IconButton(
+                      color: Colors.white,
+                      onPressed: () {
+                        myCounter.increment();
+                      },
+                      icon: const Icon(Icons.add),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
