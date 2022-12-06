@@ -16,7 +16,10 @@ class CenterWidget extends StatelessWidget {
         builder: (context, state) {
           return Text(
             '$state',
-            style: const TextStyle(color: Colors.white, fontSize: 50),
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 50,
+            ),
           );
         },
       ),
